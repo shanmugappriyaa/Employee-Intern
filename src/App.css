@@ -1,0 +1,12 @@
+.hover {
+  cursor: pointer;
+}
+
+.chart-container {
+  height: 60vh;
+  width: 80vw;
+}
+
+.m-t-48{
+    margin-top: 48px;
+}
