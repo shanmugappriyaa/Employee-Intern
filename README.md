@@ -1,8 +1,16 @@
-# React + Vite
+**Project Explanation**
+Change parent state from child: Implemented using callback functions passed from parent to child components.
+Use Redux store and pass to child components: Utilized Redux for state management, and passed state to child components through props.
+Loading API data in a component only once: Implemented data fetching in componentDidMount lifecycle method to ensure data is fetched only once.
+Update a grid when adding a row without server call/api refresh: Managed grid state using Redux, and updated the state locally without fetching data from the server.
+Use SCSS for constants in CSS: Created a constants file (constants.scss) to store SCSS variables for consistent styling.
+Show or hide a component depending upon state: Conditionally rendered components based on state using conditional rendering in React.
+Render different components for desktop/mobile for different views: Utilized media queries in CSS to render different components based on screen size.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Libraries Used**
+React
+Redux
+D3 Charts/Chart.js
+SCSS
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Dummy APIs:** dummy.restapiexample.com 
