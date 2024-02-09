@@ -1,88 +1,83 @@
 import React, { useEffect, useState } from "react";
 import { MdOutlineDeleteForever } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
-import { add, addAll, del, selectedEmp } from "../../reducer/EmpReducer";
+import { del, selectedEmp } from "../../reducer/EmpReducer";
 import { CiEdit } from "react-icons/ci";
 import AddEmployeeMobile from "./AddEmployeeMobile";
+import { Data } from "../../utils/Data";
 
 function EmployeeList() {
   const [empData, setEmpData] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(-1);
-  let navigate = useNavigate();
+  const [addReditEmp, setAddReditEmp] = useState(false);
+
   let dispatch = useDispatch();
   let empState = useSelector((state) => state.employee);
-  const apidata = async () => {
-    try {
-      const apires = await fetch(
-        "http://dummy.restapiexample.com/api/v1/employees"
-      );
-      const res = await apires.json();
-      console.log(res.data);
-      setEmpData(res.data);
-      dispatch(addAll(res.data));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const selectedEmployee = (ev, i) => {
+
+  const addEditEmployee = (ev, i) => {
     ev.preventDefault();
     setSelectedIndex(i);
     dispatch(selectedEmp(i));
+    setAddReditEmp(true);
   };
   useEffect(() => {
     setEmpData([...empState.empList]);
   }, [empState]);
-  useEffect(() => {
-    apidata();
-  }, []);
+
   return (
     <div className="container">
       <div className="row">
-        <div className="col-6">
-          <div className="d-flex justify-content-between my-3">
-            <button
-              className="btn btn-primary"
-              onClick={() => dispatch(selectedEmp(-1))}
-            >
-              Add
-            </button>
-          </div>
-          <table className="table table-bordered">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th> Name</th>
-                <th>Salary</th>
-                <th>Edit</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {empData.map((emp, index) => (
-                <tr key={index}>
-                  <td>{emp.id}</td>
-                  <td>{emp.employee_name}</td>
-                  <td>{emp.employee_salary}</td>
-                  <td
-                    className="hover"
-                    onClick={(e) => selectedEmployee(e, index)}
-                  >
-                    <CiEdit />
-                  </td>
-                  <td className="hover" onClick={() => dispatch(del(index))}>
-                    {" "}
-                    <MdOutlineDeleteForever />
-                  </td>
-                </tr>
+        {!addReditEmp && (
+          <div className="col-12">
+            <div className="d-flex justify-content-between my-3">
+              <h3 className="fw-bold">Employee List </h3>
+              <button
+                className="btn btn-primary"
+                onClick={(e) => addEditEmployee(e, -1)}
+              >
+                Add
+              </button>
+            </div>
+
+            {empData &&
+              empData.map((emp, index) => (
+                <div key={index}>
+                  <div className="card mt-3 shadow border-0">
+                    <div className="card-body">
+                      <div className="row d-flex flex-column">
+                        <div className="col-12 d-flex justify-content-between">
+                          <label className="fw-bold">
+                            {emp.employee_name} (ID: {emp.id})
+                          </label>
+                          <span
+                            className="hover"
+                            onClick={(e) => addEditEmployee(e, index)}
+                          >
+                            <CiEdit className="edit-icon" />
+                          </span>
+                        </div>
+                        <div className="col-12 d-flex justify-content-between mt-3">
+                          <label>Salary: Rs.{emp.employee_salary}</label>
+                          <span
+                            className="hover"
+                            onClick={() => dispatch(del(index))}
+                          >
+                            {" "}
+                            <MdOutlineDeleteForever className="delete-icon" />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               ))}
-            </tbody>
-          </table>
-        </div>
-        <div className="col-6">
-          <AddEmployeeMobile />
-        </div>
+          </div>
+        )}
+        {addReditEmp && (
+          <div className="col-12">
+            <AddEmployeeMobile hideEdit={() => setAddReditEmp(false)} />
+          </div>
+        )}
       </div>
     </div>
   );

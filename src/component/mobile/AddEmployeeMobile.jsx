@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { add, edit } from "../../reducer/EmpReducer";
+import { IoArrowBack } from "react-icons/io5";
 
-function AddEmployeeMobile() {
+function AddEmployeeMobile(props) {
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [salary, setSalary] = useState("");
@@ -49,16 +50,19 @@ function AddEmployeeMobile() {
 
   return (
     <div className="p-2 m-2">
-      <h3>{id ? "Edit Employee Details" : "Add Employee Detail"}</h3>
+      <h3 className="hover" onClick={() => props.hideEdit(false)}>
+        {" "}
+        <IoArrowBack className="me-2" />
+        {id ? "Edit Employee Details" : "Add Employee Detail"}
+      </h3>
 
       <form>
         {id && (
-          <div class="form-group">
-            <label>Employee id</label>
-            <p>{id}</p>
+          <div className="form-group mt-4">
+            <p className="fw-bold">Employee id {id}</p>
           </div>
         )}
-        <div class="form-group">
+        <div className="form-group">
           <label>Employee Name</label>
           <input
             type="text"
@@ -68,7 +72,7 @@ function AddEmployeeMobile() {
             onChange={(e) => setName(e.target.value)}
           />
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <label>Employee Salary</label>
           <input
             type="text"
@@ -78,7 +82,7 @@ function AddEmployeeMobile() {
             onChange={(e) => setSalary(e.target.value)}
           />
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <label>Employee Age</label>
           <input
             type="text"
@@ -90,7 +94,7 @@ function AddEmployeeMobile() {
         </div>
         <button
           type="button"
-          class="btn btn-primary"
+          className="btn btn-primary"
           onClick={(e) => addEditEmployee(e)}
         >
           {id ? "EDIT" : "Submit"}

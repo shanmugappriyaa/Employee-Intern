@@ -53,12 +53,12 @@ function AddEmployee() {
 
       <form>
         {id && (
-          <div class="form-group">
+          <div className="form-group">
             <label>Employee id</label>
             <p>{id}</p>
           </div>
         )}
-        <div class="form-group">
+        <div className="form-group">
           <label>Employee Name</label>
           <input
             type="text"
@@ -68,7 +68,7 @@ function AddEmployee() {
             onChange={(e) => setName(e.target.value)}
           />
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <label>Employee Salary</label>
           <input
             type="text"
@@ -78,7 +78,7 @@ function AddEmployee() {
             onChange={(e) => setSalary(e.target.value)}
           />
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <label>Employee Age</label>
           <input
             type="text"
@@ -90,7 +90,7 @@ function AddEmployee() {
         </div>
         <button
           type="button"
-          class="btn btn-primary"
+          className="btn btn-primary"
           onClick={(e) => addEditEmployee(e)}
         >
           {id ? "EDIT" : "Submit"}

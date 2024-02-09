@@ -4,7 +4,7 @@ import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
 import PieChart from "../chart/PieChart";
 import BarChart from "../chart/BarChart";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addAll } from "../reducer/EmpReducer";
 import axios from "axios";
 
@@ -13,8 +13,8 @@ Chart.register(CategoryScale);
 function Dasboard() {
   const [empData, setEmpData] = useState([]);
   let dispatch = useDispatch();
+  let empState = useSelector((state) => state.employee);
   const [chartData, setChartData] = useState({});
-
   const [pieChartData, setPieChartData] = useState({});
 
   const updateBarChartConfig = (empData) => {
@@ -82,7 +82,14 @@ function Dasboard() {
   };
 
   useEffect(() => {
-    apidata();
+    console.log("empState----------. ", empState?.empList);
+    if (empState?.empList?.length > 0) {
+      setEmpData([...empState.empList]);
+      updateBarChartConfig([...empState.empList]);
+      updatePieChartConfig([...empState.empList]);
+    } else {
+      apidata();
+    }
   }, []);
 
   return (
